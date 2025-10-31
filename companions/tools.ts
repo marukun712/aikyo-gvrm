@@ -5,17 +5,7 @@ export const gestureAction = createCompanionAction({
 	id: "gesture",
 	description: "ジェスチャーを表現します。",
 	inputSchema: z.object({
-		name: z.enum([
-			"idle",
-			"walk",
-			"run",
-			"wave",
-			"nod",
-			"dance",
-			"jump",
-			"look",
-			"stretch",
-		]),
+		name: z.enum(["idle", "wave", "dance"]),
 	}),
 	topic: "actions",
 	publish: ({ input, id }) => {

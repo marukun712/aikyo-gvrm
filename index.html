@@ -39,13 +39,24 @@
     camera.position.set(0, 0.4, 1.5);
 
     // GVRM
-    const gvrm = await GVRM.load('./public/author.gvrm', scene, camera, renderer);  // 1/3
-    await gvrm.changeFBX('./public/Idle.fbx');  // 2/3
+    const gvrm = await GVRM.load('./public/author.gvrm', scene, camera, renderer);
 
     renderer.setAnimationLoop(() => {
-      gvrm.update();  // 3/3
+      gvrm.update();
       renderer.render(scene, camera);
     });
+
+    const ws = new WebSocket("ws://localhost:8080")
+
+    ws.onmessage = async (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        const name = data?.params?.params?.name;
+        await gvrm.changeFBX(`./public/${name}.fbx`);
+      } catch (error) {
+        console.error(error);
+      }
+    };
   </script>
 </body>
 
