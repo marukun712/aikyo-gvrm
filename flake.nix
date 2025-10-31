@@ -20,8 +20,8 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.pnpm
-            pkgs.nodejs_24
+            pkgs.bun
+            pkgs.python310
           ];
         };
       }
