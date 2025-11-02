@@ -43,7 +43,7 @@ export const card: CompanionCard = {
 				expression: "is_happy == true",
 				execute: [
 					{
-						instruction: "ジャンプする！",
+						instruction: "手を降る！",
 						tool: gestureAction,
 					},
 				],
