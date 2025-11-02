@@ -3,6 +3,17 @@
 	"module": "index.ts",
 	"type": "module",
 	"private": true,
+	"scripts": {
+		"format": "biome format ./",
+		"format:fix": "biome format --write ./",
+		"lint": "biome lint ./",
+		"lint:fix": "biome lint --write ./",
+		"check": "biome check ./",
+		"check:fix": "biome check --write ./",
+		"talk": "bun ./cards/aya_talk.ts",
+		"basic": "bun ./cards/aya_basic.ts",
+		"cel": "bun ./cards/aya_cel.ts"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.2",
 		"@types/bun": "latest"
@@ -12,9 +23,9 @@
 	},
 	"dependencies": {
 		"@ai-sdk/anthropic": "^2.0.39",
-		"@aikyo/firehose": "^1.5.9",
-		"@aikyo/server": "^1.5.2",
-		"@aikyo/utils": "^1.5.2",
-		"zod": "3.25.5"
+		"@aikyo/firehose": "latest",
+		"@aikyo/server": "latest",
+		"@aikyo/utils": "latest",
+		"zod": "3.25.76"
 	}
 }

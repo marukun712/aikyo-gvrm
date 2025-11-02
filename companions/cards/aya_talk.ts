@@ -1,7 +1,13 @@
-import type { CompanionCard } from "@aikyo/server";
-import { gestureAction } from "../tools";
+import { anthropic } from "@ai-sdk/anthropic";
+import {
+	CompanionAgent,
+	type CompanionCard,
+	CompanionServer,
+	type Message,
+} from "@aikyo/server";
+import { speakTool } from "@aikyo/utils";
 
-export const aya: CompanionCard = {
+export const card: CompanionCard = {
 	metadata: {
 		id: "companion_aya",
 		name: "aya",
@@ -13,7 +19,7 @@ export const aya: CompanionCard = {
 			"分散システムって、みんなで支え合って動いてる感じが好きなんだ...ちょっと可愛いと思わない?",
 	},
 	role: "あなたは、我が道を行く役として、他のコンパニオンやユーザーと積極的に交流します。",
-	actions: { gestureAction },
+	actions: { speakTool },
 	knowledge: {},
 	events: {
 		params: {
@@ -21,37 +27,28 @@ export const aya: CompanionCard = {
 			description: "descriptionに従い、それぞれ適切に値を代入してください。",
 			type: "object",
 			properties: {
-				is_hogefuga: {
-					description: "ユーザーの入力がhogefugaかどうか",
-					type: "boolean",
-				},
-				want_gesture: {
-					description: "ジェスチャーで表現したいものがあるかどうか",
+				want_talk: {
+					description: "返信の必要があるかどうか",
 					type: "boolean",
 				},
 			},
-			required: ["is_hogefuga", "want_gesture"],
+			required: ["is_happy"],
 		},
 		conditions: [
 			{
-				expression: "is_hogefuga == true",
+				expression: "true",
 				execute: [
 					{
-						instruction: "踊る！",
-						tool: gestureAction,
-					},
-				],
-			},
-			{
-				expression: "want_gesture == true",
-				execute: [
-					{
-						instruction:
-							"ジェスチャーで体の動きを表現する。何があっても踊ってはいけません。",
-						tool: gestureAction,
+						instruction: "会話の続きを生成する。",
+						tool: speakTool,
 					},
 				],
 			},
 		],
 	},
 };
+
+const history: Message[] = [];
+const agent = new CompanionAgent(card, anthropic("claude-haiku-4-5"), history);
+const server = new CompanionServer(agent, history);
+await server.start();

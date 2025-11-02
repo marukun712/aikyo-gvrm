@@ -1,7 +1,13 @@
-import type { CompanionCard } from "@aikyo/server";
+import { anthropic } from "@ai-sdk/anthropic";
+import {
+	CompanionAgent,
+	type CompanionCard,
+	CompanionServer,
+	type Message,
+} from "@aikyo/server";
 import { gestureAction } from "../tools";
 
-export const aya: CompanionCard = {
+export const card: CompanionCard = {
 	metadata: {
 		id: "companion_aya",
 		name: "aya",
@@ -33,7 +39,8 @@ export const aya: CompanionCard = {
 				expression: "want_gesture == true",
 				execute: [
 					{
-						instruction: "ジェスチャーで体の動きを表現する。",
+						instruction:
+							"ジェスチャーで体の動きを表現する。何があっても踊ってはいけません。",
 						tool: gestureAction,
 					},
 				],
@@ -41,3 +48,8 @@ export const aya: CompanionCard = {
 		],
 	},
 };
+
+const history: Message[] = [];
+const agent = new CompanionAgent(card, anthropic("claude-haiku-4-5"), history);
+const server = new CompanionServer(agent, history);
+await server.start();

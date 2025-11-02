@@ -39,7 +39,7 @@
     camera.position.set(0, 0.4, 1.5);
 
     // GVRM
-    const gvrm = await GVRM.load('./public/author.gvrm', scene, camera, renderer);
+    const gvrm = await GVRM.load('./public/model.gvrm', scene, camera, renderer);
 
     renderer.setAnimationLoop(() => {
       gvrm.update();

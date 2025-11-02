@@ -1,0 +1,3 @@
+# aikyo-gvrm
+
+aikyoでgvrmモデルをアニメーションさせるデモ。
